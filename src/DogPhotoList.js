@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import DogPhoto from "./DogPhoto";
+import NewPhotoForm from "./NewPhotoForm";
 
 class DogPhotoList extends Component {
   constructor(props) {
@@ -16,7 +17,15 @@ class DogPhotoList extends Component {
         }
       ]
     };
+    this.handleAdd = this.handleAdd.bind(this);
   }
+
+  handleAdd(newDog) {
+    this.setState(prevState => ({
+      photos: [newDog, ...prevState.photos]
+    }));
+  }
+
   render() {
     let dogs = this.state.photos.map((photo, i) => (
       <DogPhoto key={i} src={photo.src} caption={photo.caption} />
@@ -24,6 +33,7 @@ class DogPhotoList extends Component {
     return (
       <div className="DogPhotoList">
         <h1>HERE ARE SOME AWESOME DOGS</h1>
+        <NewPhotoForm handleAdd={this.handleAdd} />
         {dogs}
       </div>
     );
